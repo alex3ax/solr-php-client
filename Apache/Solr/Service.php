@@ -1212,7 +1212,7 @@ class Apache_Solr_Service
 
 		// common parameters in this interface
 		$params['wt'] = self::SOLR_WRITER;
-		$params['json.nl'] = $this->_namedListTreatment;
+		$params['json.nl'] = 'arrarr';
 
 		$params['q'] = $query;
 
