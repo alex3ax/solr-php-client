@@ -1,0 +1,10 @@
+{
+    "name": "nikita/solr-php-client",
+    "authors": [
+        {
+            "name": "Nikita Pchelintsev",
+            "email": "073rus@gmail.com"
+        }
+    ],
+    "require": {}
+}
