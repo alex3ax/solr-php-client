@@ -756,7 +756,12 @@ class Apache_Solr_Service
 			$key = htmlspecialchars($key, ENT_QUOTES, 'UTF-8');
 			$fieldBoost = $document->getFieldBoost($key);
 
-			if (is_array($value))
+            if ($key == '_childDocuments_') {
+                foreach ($value as $doc) {
+                    $xml .= $this->_documentToXmlFragment($doc);
+                }
+            }
+			else if (is_array($value))
 			{
 				foreach ($value as $multivalue)
 				{
@@ -1232,3 +1237,4 @@ class Apache_Solr_Service
 		}
 	}
 }
+
