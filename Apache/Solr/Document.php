@@ -89,6 +89,13 @@ class Apache_Solr_Document implements IteratorAggregate
 	protected $_fieldBoosts = array();
 
 	/**
+	 * Document field modifier values, indexed by name
+	 *
+	 * @var array array of strings
+	 */
+	protected $_fieldModifiers = array();
+
+	/**
 	 * Clear all boosts and fields from this document
 	 */
 	public function clear()
@@ -97,6 +104,7 @@ class Apache_Solr_Document implements IteratorAggregate
 
 		$this->_fields = array();
 		$this->_fieldBoosts = array();
+		$this->_fieldModifiers = array();
 	}
 
 	/**
@@ -226,6 +234,39 @@ class Apache_Solr_Document implements IteratorAggregate
 	{
 		$this->_fields[$key] = $value;
 		$this->setFieldBoost($key, $boost);
+	}
+
+	/**
+	 * Set the field modifier for a document field
+	 *
+	 * @param string $key field name for the modifier
+	 * @param mixed $modifier
+	 */
+	public function setFieldModifier($key, $modifier)
+	{
+		$modifier = (string) $modifier;
+		$this->_fieldModifiers[$key] = $modifier;
+	}
+
+	/**
+	 * Get the currently set field modifier for a document field
+	 *
+	 * @param string $key
+	 * @return string|bool currently set field modifier, false if one is not set
+	 */
+	public function getFieldModifier($key)
+	{
+		return isset($this->_fieldModifiers[$key]) ? $this->_fieldModifiers[$key] : false;
+	}
+
+	/**
+	 * Return current field modifiers, indexed by field name
+	 *
+	 * @return array
+	 */
+	public function getFieldModifiers()
+	{
+		return $this->_fieldModifiers;
 	}
 
 	/**

@@ -751,10 +751,17 @@ class Apache_Solr_Service
 
 		$xml .= '>';
 
+		$documentForUpdate = !empty($document->getFieldModifiers());
+
 		foreach ($document as $key => $value)
 		{
 			$key = htmlspecialchars($key, ENT_QUOTES, 'UTF-8');
 			$fieldBoost = $document->getFieldBoost($key);
+			$fieldModifier = $document->getFieldModifier($key);
+
+			if ($documentForUpdate && $key !== 'id' && !$fieldModifier) {
+				continue;
+			}
 
             if ($key == '_childDocuments_') {
                 foreach ($value as $doc) {
@@ -787,6 +794,11 @@ class Apache_Solr_Service
 				if ($fieldBoost !== false)
 				{
 					$xml .= ' boost="' . $fieldBoost . '"';
+				}
+
+				if ($fieldModifier !== false)
+				{
+					$xml .= ' update="' . $fieldModifier . '"';
 				}
 
 				$value = htmlspecialchars($value, ENT_NOQUOTES, 'UTF-8');
